@@ -33,3 +33,22 @@ export const deleteProductAPI = (productId) => {
     }
   };
 };
+export const updateProductAPI = (product) => {
+  return async (dispatch) => {
+    // send request to Server
+    const res = await fetch(
+      process.env.REACT_APP_DOMAIN + `/product/update-product`,
+      {
+        method: "POST",
+        headers: setHearder({
+          "Content-Type": "application/json",
+        }),
+        body: JSON.stringify(product),
+      }
+    );
+    // 200 = ok
+    if (res.status === 200) {
+      dispatch({ type: "UPDATE", payload: product });
+    }
+  };
+};

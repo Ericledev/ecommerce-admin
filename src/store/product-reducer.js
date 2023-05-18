@@ -18,6 +18,14 @@ const productReducer = (state = initialState, action) => {
       productList: [...temp],
     };
   }
+  if (action.type === "UPDATE") {
+    state.productList.map((item) => {
+      if (item._id === action.payload._id) {
+        item = action.payload;
+      }
+      return item;
+    });
+  }
 
   return state;
 };

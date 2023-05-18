@@ -1,44 +1,39 @@
 import classes from "./Product.module.css";
 import BannerShop from "../banner/BannerShop";
-// import { useParams } from "react-router-dom";
 import ProductTable from "../product/product-table";
-// import useHTTP from "../hooks/use-http";
 import { useEffect, useState } from "react";
 import { deleteProductAPI, getAllProductAPI } from "./lib/api-product";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Product = () => {
+  const navigate = useNavigate();
   const { productList } = useSelector((state) => state.productReducer);
-  // console.log("CHECK LISTPRODUCT: ", productList);
   const dispatch = useDispatch();
-  // const { data, status, error, sendRequest } = useHTTP(getProducts);
-  // const { data = dataDelte, status, error, sendRequest } = useHTTP(getProducts);
-  // const [products, setProducts] = useState(null);
+  const [products, setProducts] = useState(null);
   useEffect(() => {
     dispatch(getAllProductAPI());
   }, []);
-  // useEffect(() => {
-  //   setProducts(productList);
-  // }, [productList]);
+  useEffect(() => {
+    setProducts(productList);
+  }, [productList]);
 
   // search function
   const searchProductHandler = (e) => {
-    // // search product by name
-    // const searchResult = data.filter((item) => {
-    //   return item.name.toLowerCase().includes(e.target.value.toLowerCase());
-    // });
-    // // set product to showup
-    // setProducts(searchResult);
+    // search product by name
+    const searchResult = productList.filter((item) => {
+      return item.name.toLowerCase().includes(e.target.value.toLowerCase());
+    });
+    // set product to showup
+    setProducts(searchResult);
   };
   // crud handler
   const crudHandler = (type, productId) => {
-    // console.log("index: ", index);
     if (type === "delete") {
-      // data.splice(index, 1);
-      // setProducts([...data]);
       dispatch(deleteProductAPI(productId));
     }
     if (type === "update") {
+      navigate(`/products/update/${productId}`);
       // const searchResult=data.filter(item=>item._id!==payload)
       // setProducts(searchResult)
       // return
@@ -58,7 +53,7 @@ const Product = () => {
         </div>
         <div className={classes["product-table-container"]}>
           {productList.length > 0 && (
-            <ProductTable products={productList} crud={crudHandler} />
+            <ProductTable products={products} crud={crudHandler} />
           )}
         </div>
       </div>
