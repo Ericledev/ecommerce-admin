@@ -6,6 +6,7 @@ import RegisterPage from "./components/pages/RegisterPage";
 import LoginPage from "./components/pages/LoginPage";
 import Product from "./components/pages/Product";
 import ProductUpdate from "./components/pages/ProductUpdate";
+import ChatRoom from "./components/pages/ChatRoom";
 
 function App() {
   const { isLoggedIn } = useSelector((state) => state.logInReducer);
@@ -19,6 +20,7 @@ function App() {
           path="/products/update/:id"
           element={isLoggedIn ? <ProductUpdate /> : ""}
         />
+        <Route path="/chat-room" element={isLoggedIn ? <ChatRoom /> : ""} />
       </Routes>
     </Layout>
   );
