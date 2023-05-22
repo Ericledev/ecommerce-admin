@@ -4,10 +4,10 @@ import {
   applyMiddleware,
 } from "redux";
 import thunk from "redux-thunk";
-import orderReducer from "./order-reducer";
 import productReducer from "./product-reducer";
 import logInReducer from "./login-reducer";
 import navBarActiveReducer from "./nav-bar-active-reducer";
+import chatReducer from "./chat-reducer";
 
 // convert object to string and store in localStorage
 function saveToLocalStorage(state) {
@@ -32,10 +32,10 @@ function loadCartFromLocalStorage() {
 }
 const store = createStore(
   combineReducers({
-    orderReducer,
     productReducer,
     logInReducer,
     navBarActiveReducer,
+    chatReducer,
   }),
   loadCartFromLocalStorage(),
   applyMiddleware(thunk)

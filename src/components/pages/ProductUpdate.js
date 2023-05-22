@@ -3,7 +3,7 @@ import BannerShop from "../banner/BannerShop";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
-import { updateProductAPI } from "./lib/api-product";
+import { updateProductAPI } from "../lib/api-product";
 
 const ProductUpdate = () => {
   const { id } = useParams();

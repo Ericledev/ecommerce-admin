@@ -32,8 +32,11 @@
   display: flex;
   gap: 10px;
   justify-content: space-evenly;
-  padding: 10px 0;
+  padding: 10px;
   border-bottom: 1px solid gray;
+}
+.contact-list > label {
+  cursor: pointer;
 }
 
 .admin-icon {

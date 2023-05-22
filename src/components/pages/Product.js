@@ -2,7 +2,7 @@ import classes from "./Product.module.css";
 import BannerShop from "../banner/BannerShop";
 import ProductTable from "../product/product-table";
 import { useEffect, useState } from "react";
-import { deleteProductAPI, getAllProductAPI } from "./lib/api-product";
+import { deleteProductAPI, getAllProductAPI } from "../lib/api-product";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +13,7 @@ const Product = () => {
   const [products, setProducts] = useState(null);
   useEffect(() => {
     dispatch(getAllProductAPI());
+    dispatch({ type: "ACTIVE_PRODUCT_PAGE" });
   }, []);
   useEffect(() => {
     setProducts(productList);

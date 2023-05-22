@@ -6,7 +6,9 @@ import classes from "./NavBar.module.css";
 const NavBar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loginPage } = useSelector((state) => state.navBarActiveReducer);
+  const { loginPage, chatRoomPage, productPage } = useSelector(
+    (state) => state.navBarActiveReducer
+  );
   const { isLoggedIn, user } = useSelector((state) => state.logInReducer);
   const [active, setActive] = useState();
   useEffect(() => {
@@ -25,9 +27,15 @@ const NavBar = () => {
         navigate("/");
         break;
       case "logout":
+        localStorage.removeItem("cartState");
         dispatch({ type: "ON_LOGOUT" });
-        dispatch({ type: "CLEAR_CART" });
         navigate("/");
+        break;
+      case "chatRoom":
+        navigate("/chat-room");
+        break;
+      case "product":
+        navigate("/products");
         break;
       default:
         navigate("/");
@@ -36,6 +44,26 @@ const NavBar = () => {
   return (
     // NavBar container
     <div className={classes.container}>
+      {/* Navbar left */}
+      <ul className={classes["nav-bar-left"]}>
+        <li
+          onClick={onClickHandler}
+          name="chatRoom"
+          // className={active === "home" || homePage ? classes.active : null}
+          className={chatRoomPage ? classes.active : null}
+        >
+          Chat room
+        </li>
+        <li>|</li>
+        <li
+          onClick={onClickHandler}
+          name="product"
+          // className={active === "shop" || shopPage ? classes.active : null}
+          className={productPage ? classes.active : null}
+        >
+          Product
+        </li>
+      </ul>
       {/* Navbar center */}
       <div className={classes["nav-bar-center"]}>BOUTIQUE</div>
 
