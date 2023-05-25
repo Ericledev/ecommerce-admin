@@ -7,9 +7,13 @@ import LoginPage from "./components/pages/LoginPage";
 import Product from "./components/pages/Product";
 import ProductUpdate from "./components/pages/ProductUpdate";
 import ChatRoom from "./components/pages/ChatRoom";
+import { useEffect } from "react";
 
 function App() {
   const { isLoggedIn } = useSelector((state) => state.logInReducer);
+  useEffect(() => {
+    return localStorage.clear();
+  }, []);
   return (
     <Layout>
       <Routes>

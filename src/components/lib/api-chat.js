@@ -36,20 +36,22 @@ export const getChatRoomAPI = () => {
 };
 export const addMessageAPI = (message) => {
   return async (dispatch) => {
-    const res = await fetch(
-      process.env.REACT_APP_DOMAIN + `/chat/add-message`,
-      {
-        method: "POST",
-        headers: setHearder({
-          "Content-Type": "application/json",
-        }),
-        body: JSON.stringify(message),
-      }
-    );
+    const res = await fetch(process.env.REACT_APP_DOMAIN + `/chat/add-chat`, {
+      method: "POST",
+      headers: setHearder({
+        "Content-Type": "application/json",
+      }),
+      body: JSON.stringify(message),
+      // message: {
+      //   user: user.userId,
+      //   roomId: chooseRoom._id,
+      //   message: message,
+      // }
+    });
     // if (res.ok) {
     //   const data = await res.json();
-    //   // console.log("CHECK GET DATA: ", data);
-    //   dispatch({ type: "GET_ROOM", payload: data });
+    // console.log("CHECK GET DATA: ", data);
+    // dispatch({ type: "GET_ROOM", payload: data });
     // }
   };
 };
