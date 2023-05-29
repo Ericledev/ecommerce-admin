@@ -17,6 +17,7 @@ const ChatRoom = () => {
   const [socket, setSocket] = useState(null);
   const [adminTyping, setAdminTyping] = useState();
   refChooseRoom.current = chooseRoom;
+  const [newMessages, setNewMessages] = useState([]);
   // console.log("GET CHAT ROOMS: ", chatRooms);
   useEffect(() => {
     // listen at "ADMIN_CHANNEL"
@@ -31,6 +32,24 @@ const ChatRoom = () => {
           },
         });
       }
+      // check new messages that is not read
+      if (data.roomId !== chooseRoom._id) {
+        const findIndex = newMessages.findIndex(
+          (item) => item.roomId === data.roomId
+        );
+        if (findIndex === -1) {
+          setNewMessages((prev) => [
+            ...prev,
+            { roomId: data.roomId, messages: [data.message], totalMessage: 1 },
+          ]);
+        } else {
+          setNewMessages((prev) => {
+            prev[findIndex].messages.push(data.message);
+            ++prev[findIndex].totalMessage;
+            return [...prev];
+          });
+        }
+      }
       // console.log("CEHCK DATA TYPING: ", data);
       // console.log("Choose channel chooseRoom._id: ", refChooseRoom.current);
       if (
@@ -43,9 +62,27 @@ const ChatRoom = () => {
       }
       if (data.action === "ONLINE") {
         console.log("CHECK ONLINE: ", data);
+        // data:{
+        //     action: 'ONLINE',
+        //     roomId: '646f843b27d37d6fd6f10c92',
+        //     userId: 'client',
+        //     socketId: 'sFFyjPk0qKzq-PfAAAAV'
+        // }
+        dispatch({
+          type: "UPDATE_STATUS_ON_OFF_LINE",
+          payload: { ...data, conversation: [] },
+        });
       }
       if (data.action === "OFFLINE") {
         console.log("CHECK OFFLINE: ", data);
+        // data:{
+        //   action: 'OFFLINE',
+        //   socketId: 'uadrRpnX0pXxSpVVAAAT'
+        // }
+        dispatch({
+          type: "UPDATE_STATUS_ON_OFF_LINE",
+          payload: { ...data },
+        });
       }
     });
     return () => {
@@ -70,14 +107,19 @@ const ChatRoom = () => {
   const contactList =
     chatRooms &&
     chatRooms.map((item, index) => {
+      const isOnline = item.action === "ONLINE" ? "actived" : "";
+      const isChoosen = item._id === chooseRoom?._id ? "actived-choose" : "";
       return (
         <div className={classes["contact-list"]} key={index}>
           <img
-            className={classes["admin-icon"]}
+            className={classes["admin-icon"] + " " + classes[isOnline]}
             src={admin_icon}
             alt="Admin icon"
           />
-          <label onClick={chooseRoomChatHandler.bind(null, item)}>
+          <label
+            onClick={chooseRoomChatHandler.bind(null, item)}
+            className={classes[isChoosen]}
+          >
             {" "}
             {item._id}{" "}
           </label>

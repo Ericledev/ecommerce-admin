@@ -45,25 +45,27 @@ const NavBar = () => {
     // NavBar container
     <div className={classes.container}>
       {/* Navbar left */}
-      <ul className={classes["nav-bar-left"]}>
-        <li
-          onClick={onClickHandler}
-          name="chatRoom"
-          // className={active === "home" || homePage ? classes.active : null}
-          className={chatRoomPage ? classes.active : null}
-        >
-          Chat room
-        </li>
-        <li>|</li>
-        <li
-          onClick={onClickHandler}
-          name="product"
-          // className={active === "shop" || shopPage ? classes.active : null}
-          className={productPage ? classes.active : null}
-        >
-          Product
-        </li>
-      </ul>
+      {isLoggedIn && (
+        <ul className={classes["nav-bar-left"]}>
+          <li
+            onClick={onClickHandler}
+            name="chatRoom"
+            // className={active === "home" || homePage ? classes.active : null}
+            className={chatRoomPage ? classes.active : null}
+          >
+            Chat room
+          </li>
+          <li>|</li>
+          <li
+            onClick={onClickHandler}
+            name="product"
+            // className={active === "shop" || shopPage ? classes.active : null}
+            className={productPage ? classes.active : null}
+          >
+            Product
+          </li>
+        </ul>
+      )}
       {/* Navbar center */}
       <div className={classes["nav-bar-center"]}>BOUTIQUE</div>
 

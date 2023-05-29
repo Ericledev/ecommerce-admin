@@ -11,9 +11,9 @@ import { useEffect } from "react";
 
 function App() {
   const { isLoggedIn } = useSelector((state) => state.logInReducer);
-  useEffect(() => {
-    return localStorage.clear();
-  }, []);
+  // useEffect(() => {
+  //   return localStorage.clear();
+  // }, []);
   return (
     <Layout>
       <Routes>
