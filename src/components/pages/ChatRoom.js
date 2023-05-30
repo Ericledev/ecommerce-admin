@@ -17,7 +17,7 @@ const ChatRoom = () => {
   const [socket, setSocket] = useState(null);
   const [adminTyping, setAdminTyping] = useState();
   refChooseRoom.current = chooseRoom;
-  const [newMessages, setNewMessages] = useState([]);
+  // const [newMessages, setNewMessages] = useState([]);
   // console.log("GET CHAT ROOMS: ", chatRooms);
   useEffect(() => {
     // listen at "ADMIN_CHANNEL"
@@ -32,26 +32,6 @@ const ChatRoom = () => {
           },
         });
       }
-      // check new messages that is not read
-      if (data.roomId !== chooseRoom._id) {
-        const findIndex = newMessages.findIndex(
-          (item) => item.roomId === data.roomId
-        );
-        if (findIndex === -1) {
-          setNewMessages((prev) => [
-            ...prev,
-            { roomId: data.roomId, messages: [data.message], totalMessage: 1 },
-          ]);
-        } else {
-          setNewMessages((prev) => {
-            prev[findIndex].messages.push(data.message);
-            ++prev[findIndex].totalMessage;
-            return [...prev];
-          });
-        }
-      }
-      // console.log("CEHCK DATA TYPING: ", data);
-      // console.log("Choose channel chooseRoom._id: ", refChooseRoom.current);
       if (
         data.action === "START_TYPING" &&
         data.roomId === refChooseRoom.current._id
@@ -128,36 +108,44 @@ const ChatRoom = () => {
     });
 
   const sendMessageHandler = (message) => {
+    if (!chooseRoom) {
+      alert("Please choose room to chat!.");
+      return;
+    }
+    if (refChatContent.current.value.trim() === "") {
+      alert("Please enter message.");
+      refChatContent.current.focus();
+      return;
+    }
     // add message on redux
     dispatch({
       type: "ADD_MESSAGE",
       payload: {
         user: user.userId,
-        roomId: chooseRoom._id,
-        message: message,
+        roomId: chooseRoom?._id,
+        message: refChatContent.current.value,
       },
     });
     // add message on server
     dispatch(
       addMessageAPI({
         user: user.userId,
-        roomId: chooseRoom._id,
-        message: message,
+        roomId: chooseRoom?._id,
+        message: refChatContent.current.value,
       })
     );
-    console.log("CHECK SEND MESSAGE: ", {
-      roomId: chooseRoom._id,
-      message: message,
-    });
+    refChatContent.current.value = "";
+    // console.log("CHECK SEND MESSAGE: ", {
+    //   roomId: chooseRoom._id,
+    //   message: message,
+    // });
   };
   // emit when clien typing
   const typingHandler = (status) => {
-    console.log("CHECK CHOOSE ROOM: ", chooseRoom);
-    console.log("CHECK user: ", user);
     if (status === "START") {
       socket.emit("TYPING", {
         action: "START_TYPING",
-        roomId: chooseRoom._id,
+        roomId: chooseRoom?._id,
         userId: user.userId,
       });
       return;
@@ -165,7 +153,7 @@ const ChatRoom = () => {
     if (status === "STOP") {
       socket.emit("TYPING", {
         action: "STOP_TYPING",
-        roomId: chooseRoom._id,
+        roomId: chooseRoom?._id,
         userId: user.userId,
       });
       return;

@@ -9,7 +9,9 @@ const NavBar = () => {
   const { loginPage, chatRoomPage, productPage } = useSelector(
     (state) => state.navBarActiveReducer
   );
-  const { isLoggedIn, user } = useSelector((state) => state.logInReducer);
+  const { isLoggedIn, user, isAdmin } = useSelector(
+    (state) => state.logInReducer
+  );
   const [active, setActive] = useState();
   useEffect(() => {
     return () => {
@@ -45,8 +47,9 @@ const NavBar = () => {
     // NavBar container
     <div className={classes.container}>
       {/* Navbar left */}
-      {isLoggedIn && (
-        <ul className={classes["nav-bar-left"]}>
+
+      <ul className={classes["nav-bar-left"]}>
+        {isLoggedIn && (
           <li
             onClick={onClickHandler}
             name="chatRoom"
@@ -55,17 +58,23 @@ const NavBar = () => {
           >
             Chat room
           </li>
-          <li>|</li>
-          <li
-            onClick={onClickHandler}
-            name="product"
-            // className={active === "shop" || shopPage ? classes.active : null}
-            className={productPage ? classes.active : null}
-          >
-            Product
-          </li>
-        </ul>
-      )}
+        )}
+        {isLoggedIn && isAdmin && (
+          <>
+            {" "}
+            <li>|</li>
+            <li
+              onClick={onClickHandler}
+              name="product"
+              // className={active === "shop" || shopPage ? classes.active : null}
+              className={productPage ? classes.active : null}
+            >
+              Product
+            </li>
+          </>
+        )}
+      </ul>
+
       {/* Navbar center */}
       <div className={classes["nav-bar-center"]}>BOUTIQUE</div>
 

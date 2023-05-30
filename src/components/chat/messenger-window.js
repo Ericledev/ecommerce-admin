@@ -4,7 +4,7 @@ import { forwardRef, useEffect, useRef } from "react";
 
 const MessengerWindow = forwardRef(
   ({ conversation, onSendMessage, onTypingHandler, adminTyping }, ref) => {
-    const refMessage = useRef();
+    // const refMessage = useRef();
     // useEffect(() => {
     //   ref.current?.scrollIntoView({ behavior: "smooth" });
     // }, [conversation]);
@@ -38,13 +38,9 @@ const MessengerWindow = forwardRef(
       });
 
     const sendMessageHandler = () => {
-      if (refMessage.current.value.trim() === "") {
-        alert("Please enter message.");
-        refMessage.current.focus();
-        return;
-      }
-      onSendMessage(refMessage.current.value);
-      refMessage.current.value = "";
+      onSendMessage();
+      // onSendMessage(refMessage.current.value);
+      // refMessage.current.value = "";
     };
     const startTypingHandler = () => {
       onTypingHandler("START");
@@ -64,7 +60,7 @@ const MessengerWindow = forwardRef(
           <input
             type="text"
             placeholder="Enter Message!"
-            ref={refMessage}
+            ref={ref}
             onFocus={startTypingHandler}
             onBlur={stopTypingHandler}
           />

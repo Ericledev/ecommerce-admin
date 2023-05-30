@@ -3,6 +3,7 @@ const initialStateLogin = {
   isLoggedIn: false,
   isExistedUser: true,
   isWrongPassword: false,
+  isAdmin: true,
 };
 // user={
 //     name: string
@@ -19,6 +20,7 @@ const loginReducer = (state = initialStateLogin, action) => {
         isLoggedIn: true,
         isExistedUser: true,
         isWrongPassword: false,
+        isAdmin: action.payload.user.isAdmin ? true : false,
       };
     case "ON_LOGOUT":
       return {
@@ -26,6 +28,7 @@ const loginReducer = (state = initialStateLogin, action) => {
         isLoggedIn: false,
         isExistedUser: true,
         isWrongPassword: false,
+        isAdmin: true,
       };
     case "NOT_EXISTED_USER":
       return {
@@ -33,6 +36,7 @@ const loginReducer = (state = initialStateLogin, action) => {
         isLoggedIn: false,
         isExistedUser: false,
         isWrongPassword: false,
+        isAdmin: true,
       };
 
     case "WRONG_PASSWORD":
@@ -41,6 +45,15 @@ const loginReducer = (state = initialStateLogin, action) => {
         isLoggedIn: false,
         isExistedUser: true,
         isWrongPassword: true,
+        isAdmin: true,
+      };
+    case "IS_NOT_AUTHENTICATION":
+      return {
+        user: null,
+        isLoggedIn: false,
+        isExistedUser: true,
+        isWrongPassword: false,
+        isAdmin: false,
       };
     default:
       return state;

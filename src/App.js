@@ -10,7 +10,7 @@ import ChatRoom from "./components/pages/ChatRoom";
 import { useEffect } from "react";
 
 function App() {
-  const { isLoggedIn } = useSelector((state) => state.logInReducer);
+  const { isLoggedIn, isAdmin } = useSelector((state) => state.logInReducer);
   // useEffect(() => {
   //   return localStorage.clear();
   // }, []);
@@ -19,10 +19,13 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/products" element={isLoggedIn ? <Product /> : ""} />
+        <Route
+          path="/products"
+          element={isLoggedIn && isAdmin ? <Product /> : ""}
+        />
         <Route
           path="/products/update/:id"
-          element={isLoggedIn ? <ProductUpdate /> : ""}
+          element={isLoggedIn && isAdmin ? <ProductUpdate /> : ""}
         />
         <Route path="/chat-room" element={isLoggedIn ? <ChatRoom /> : ""} />
       </Routes>

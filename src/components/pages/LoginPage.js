@@ -8,7 +8,7 @@ import { loginAPI } from "../lib/api-login";
 const LoginPage = () => {
   const [validEmail, setValidEmail] = useState(true);
   const [validPass, setValidPass] = useState(true);
-  const { isLoggedIn, isExistedUser, isWrongPassword } = useSelector(
+  const { isLoggedIn, isExistedUser, isWrongPassword, isAdmin } = useSelector(
     (state) => state.logInReducer
   );
   const emailRef = useRef();
@@ -20,19 +20,14 @@ const LoginPage = () => {
     navigate("/register");
   };
   useEffect(() => {
-    console.log("CHECK isLoggedIn: ", isLoggedIn);
     if (!isLoggedIn) {
       dispatch({ type: "ACTIVE_LOGIN_PAGE" });
       emailRef.current.focus();
       return;
     }
-    navigate("/products");
+    navigate("/chat-room");
   }, [isLoggedIn]);
 
-  // if () {
-  //   // navigate("/");
-  // }
-  // check empty
   const isEmpty = (inputValue) => {
     if (inputValue.trim() === "") {
       return true;
@@ -98,12 +93,17 @@ const LoginPage = () => {
           />
           {!validPass && (
             <div className={classes["error-massage"]}>
-              The password is not empty and at least 8 character.
+              The password is not empty and at least 6 character.
             </div>
           )}
           {isWrongPassword && (
             <div className={classes["error-massage"]}>
               The password is wrong, try again.
+            </div>
+          )}
+          {!isAdmin && (
+            <div className={classes["error-massage"]}>
+              This acount do not access into Admin System!
             </div>
           )}
           <button className={!validForm ? classes["invalid-form"] : ""}>
