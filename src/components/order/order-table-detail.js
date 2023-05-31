@@ -24,14 +24,16 @@ const OrderTableDetail = (props) => {
     <>
       {/* Table */}
       <table className={classes["cart-table"]}>
-        <tr className={classes.header}>
-          <th>ID PRODUCT</th>
-          <th width="15%">IMAGE</th>
-          <th>PRODUCT</th>
-          <th>PRICE</th>
-          <th>COUNT</th>
-        </tr>
-        {tableData}
+        <thead>
+          <tr className={classes.header}>
+            <th>ID PRODUCT</th>
+            <th width="15%">IMAGE</th>
+            <th>PRODUCT</th>
+            <th>PRICE</th>
+            <th>COUNT</th>
+          </tr>
+        </thead>
+        <tbody>{tableData}</tbody>
       </table>
     </>
   );

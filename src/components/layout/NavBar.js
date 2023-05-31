@@ -6,7 +6,7 @@ import classes from "./NavBar.module.css";
 const NavBar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loginPage, chatRoomPage, productPage } = useSelector(
+  const { loginPage, chatRoomPage, productPage, dashboardPage } = useSelector(
     (state) => state.navBarActiveReducer
   );
   const { isLoggedIn, user, isAdmin } = useSelector(
@@ -39,6 +39,9 @@ const NavBar = () => {
       case "product":
         navigate("/products");
         break;
+      case "dashboard":
+        navigate("/dashboard");
+        break;
       default:
         navigate("/");
     }
@@ -61,15 +64,21 @@ const NavBar = () => {
         )}
         {isLoggedIn && isAdmin && (
           <>
-            {" "}
             <li>|</li>
             <li
               onClick={onClickHandler}
               name="product"
-              // className={active === "shop" || shopPage ? classes.active : null}
               className={productPage ? classes.active : null}
             >
               Product
+            </li>
+            <li>|</li>
+            <li
+              onClick={onClickHandler}
+              name="dashboard"
+              className={dashboardPage ? classes.active : null}
+            >
+              Dashboard
             </li>
           </>
         )}

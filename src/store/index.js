@@ -8,6 +8,7 @@ import productReducer from "./product-reducer";
 import logInReducer from "./login-reducer";
 import navBarActiveReducer from "./nav-bar-active-reducer";
 import chatReducer from "./chat-reducer";
+import orderReducer from "./order-reducer";
 
 // convert object to string and store in localStorage
 function saveToLocalStorage(state) {
@@ -36,6 +37,7 @@ const store = createStore(
     logInReducer,
     navBarActiveReducer,
     chatReducer,
+    orderReducer,
   }),
   loadCartFromLocalStorage(),
   applyMiddleware(thunk)

@@ -7,7 +7,8 @@ import LoginPage from "./components/pages/LoginPage";
 import Product from "./components/pages/Product";
 import ProductUpdate from "./components/pages/ProductUpdate";
 import ChatRoom from "./components/pages/ChatRoom";
-import { useEffect } from "react";
+import OrderDetail from "./components/pages/OrderDetail";
+import Dashboard from "./components/pages/Dashboard";
 
 function App() {
   const { isLoggedIn, isAdmin } = useSelector((state) => state.logInReducer);
@@ -19,6 +20,14 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="/dashboard"
+          element={isLoggedIn && isAdmin ? <Dashboard /> : ""}
+        />
+        <Route
+          path="/order/detail/:id"
+          element={isLoggedIn && isAdmin ? <OrderDetail /> : ""}
+        />
         <Route
           path="/products"
           element={isLoggedIn && isAdmin ? <Product /> : ""}

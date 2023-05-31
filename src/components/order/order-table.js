@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import classes from "./order-table.module.css";
 
 const OrderTable = (props) => {
-  const { user } = useSelector((state) => state.logInReducer);
   const { listOrders } = useSelector((state) => state.orderReducer);
   const navigate = useNavigate();
 
@@ -20,14 +19,10 @@ const OrderTable = (props) => {
     }, 0);
     return (
       <tr key={index}>
-        <td>{item._id}</td>
-        <td className={classes.price}>
-          {/* {Intl.NumberFormat("vi").format(Number(item.product.price))} VND */}
-          {user.userId}
-        </td>
-        <td className={classes.total}>{user.fullName}</td>
-        <td>{user.phoneNumber}</td>
-        <td>{user.address}</td>
+        <td className={classes["user-id"]}>{item.user_id._id}</td>
+        <td className={classes.total}>{item.user_id.fullName}</td>
+        <td>{item.user_id.phoneNumber}</td>
+        <td>{item.user_id.address}</td>
         <td>{Intl.NumberFormat("vi").format(totalPrice)} VND</td>
         <td>{item.delivery}</td>
         <td>{item.status}</td>
@@ -36,20 +31,19 @@ const OrderTable = (props) => {
             className={classes["view"]}
             onClick={viewHandler.bind(null, item)}
           >
-            View --&gt;
+            View
           </span>
         </td>
       </tr>
     );
   });
-  // console.log("CHECK MAP: ", tableData.length);
+
   return (
     <>
       {/* Table */}
       <table className={classes["order-table"]}>
         <thead>
           <tr className={classes.header}>
-            <th width="15%">ID ORDER</th>
             <th>ID USER</th>
             <th>NAME</th>
             <th>PHONE</th>
