@@ -14,8 +14,20 @@
   border: 1px solid gray;
   outline-style: none;
 }
+.add-new-btn {
+  padding: 5px 10px;
+  background-color: #5f76e8;
+  color: white;
+  border-style: none;
+  cursor: pointer;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+.add-new-btn:hover {
+  font-weight: 600;
+}
 
 .product-table-container {
   width: 100%;
-  margin-top: 20px;
+  margin: 20px 0px;
 }

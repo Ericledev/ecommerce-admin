@@ -9,6 +9,7 @@ import ProductUpdate from "./components/pages/ProductUpdate";
 import ChatRoom from "./components/pages/ChatRoom";
 import OrderDetail from "./components/pages/OrderDetail";
 import Dashboard from "./components/pages/Dashboard";
+import ProductAddNew from "./components/pages/ProductAddNew";
 
 function App() {
   const { isLoggedIn, isAdmin } = useSelector((state) => state.logInReducer);
@@ -35,6 +36,10 @@ function App() {
         <Route
           path="/products/update/:id"
           element={isLoggedIn && isAdmin ? <ProductUpdate /> : ""}
+        />
+        <Route
+          path="/products/add-new"
+          element={isLoggedIn && isAdmin ? <ProductAddNew /> : ""}
         />
         <Route path="/chat-room" element={isLoggedIn ? <ChatRoom /> : ""} />
       </Routes>

@@ -40,6 +40,9 @@ const Product = () => {
       // return
     }
   };
+  const addNewHandler = () => {
+    navigate("/products/add-new");
+  };
   return (
     <div className={classes["product-container"]}>
       <BannerShop text={{ left: "ADMIN", right: "ADMIN" }} />
@@ -53,6 +56,9 @@ const Product = () => {
           />
         </div>
         <div className={classes["product-table-container"]}>
+          <button className={classes["add-new-btn"]} onClick={addNewHandler}>
+            Add New +
+          </button>
           {productList.length > 0 && (
             <ProductTable products={products} crud={crudHandler} />
           )}

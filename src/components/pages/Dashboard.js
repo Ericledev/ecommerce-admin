@@ -1,7 +1,7 @@
 import classes from "./Dashboard.module.css";
 import BannerShop from "../banner/BannerShop";
 import OrderTable from "../order/order-table";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllOrderAPI } from "../lib/api-order";
 
@@ -39,6 +39,7 @@ const Dashboard = () => {
     <div className={classes["dashboard-container"]}>
       <BannerShop text={{ left: "ADMIN", right: "ADMIN" }} />
       <div className={classes["dashboard-content"]}>
+        {/* Dashboard Header */}
         <h4>Dashboard</h4>
         <div className={classes["dashboard-header"]}>
           <div className={classes["client"]}>
@@ -80,6 +81,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+        {/* Dashboard Table */}
         <div className={classes["dashboard-table-container"]}>
           <OrderTable />
         </div>
