@@ -13,6 +13,9 @@ const ProductTable = (props) => {
   const tableData =
     products &&
     products.map((item, index) => {
+      const pathImage = item?.images[0].includes("/images/multiple_images")
+        ? process.env.REACT_APP_DOMAIN + item.images[0]
+        : item.images[0];
       return (
         <tr key={index}>
           <td>{item._id}</td>
@@ -21,7 +24,7 @@ const ProductTable = (props) => {
             {Intl.NumberFormat("vi").format(Number(item.price))}
           </td>
           <td>
-            <img src={item.images[0]} alt={item.name} />
+            <img src={pathImage} alt={item.name} />
           </td>
           <td>{item.category}</td>
           <td className={classes.edit}>

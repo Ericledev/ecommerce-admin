@@ -1,13 +1,16 @@
 import classes from "./ProductAddNew.module.css";
 import BannerShop from "../banner/BannerShop";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
-import { updateProductAPI } from "../lib/api-product";
+import { addNewProductAPI } from "../lib/api-product";
 import CommonUtils from "../util/CommonUtils";
 
 const ProductAddNew = () => {
-  const [images, setImages] = useState([]);
+  const { user } = useSelector((state) => state.logInReducer);
+  const { succeed } = useSelector((state) => state.productReducer);
+  const [images, setImages] = useState([]); // get URL & Base64 of select files
+  const [imageFiles, setImageFiles] = useState({});
   const refProductName = useRef();
   const refCategory = useRef();
   const refShortDescription = useRef();
@@ -55,7 +58,6 @@ const ProductAddNew = () => {
     }
     return true;
   };
-
   // add new product
   const addNewProductHandler = (e) => {
     e.preventDefault();
@@ -67,11 +69,19 @@ const ProductAddNew = () => {
       long_desc: refLongDescription.current.value,
       price: refProductPrice.current.value,
       quantity: refProductQuantity.current.value,
-      images: images,
+      images: [...imageFiles],
     };
-    // dispatch(updateProductAPI(productUpdate));
-    // navigate("/products");
+    // console.log("CHECK imageFiles: ", productAddNew);
+    dispatch(addNewProductAPI({ userId: user.userId, product: productAddNew }));
   };
+
+  // waiting for save succeed, then navigation to /products
+  useEffect(() => {
+    if (!succeed) return;
+    dispatch({ type: "CLEAR_SUCCEED" });
+    navigate("/products");
+  }, [succeed]);
+  // get file image when select
   const filesSelectedHandler = async (e) => {
     const data = e.target.files;
     const selectedFile = [];
@@ -85,10 +95,11 @@ const ProductAddNew = () => {
         // create URL from selected file
         previewImageURL: URL.createObjectURL(data[i]),
         // convert image file to base64 in order to save into DB
-        imageBase64: await CommonUtils.getBase64(data[i]),
+        // imageBase64: await CommonUtils.getBase64(data[i]),
       });
     }
     setImages(selectedFile);
+    setImageFiles(data);
   };
 
   // upload images
@@ -96,8 +107,8 @@ const ProductAddNew = () => {
     images &&
     images.length > 0 &&
     images.map((file, index) => {
-      console.log("CHECK BASE64: ", file.imageBase64);
-      return <img src={file.previewImageURL} alt="product image" key={index} />;
+      // console.log("CHECK BASE64: ", file.imageBase64);
+      return <img src={file.previewImageURL} alt="product pic" key={index} />;
     });
 
   return (
@@ -171,6 +182,7 @@ const ProductAddNew = () => {
             id="upload-image"
             type="file"
             accept=".jpg,.jpeg,.png,.gif"
+            name="multiple_images"
             multiple
             onChange={filesSelectedHandler}
           />

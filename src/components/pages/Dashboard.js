@@ -21,13 +21,15 @@ const Dashboard = () => {
   const numberOfOrder = listOrders?.length;
   // total earning of month
   let totalPrice = 0;
-  listOrders.map((item, index) => {
-    // total price
-    totalPrice += item.products.reduce((total, product) => {
-      return (total += product.quantity * product.product_id.price);
-    }, 0);
-    return;
-  });
+  console.log("CHECK ORDER", listOrders);
+  listOrders &&
+    listOrders.map((item, index) => {
+      // total price
+      totalPrice += item.products.reduce((total, product) => {
+        return (total += product.quantity * product.product_id?.price);
+      }, 0);
+      return;
+    });
 
   // componetDidMount
   useEffect(() => {

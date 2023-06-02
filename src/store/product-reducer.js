@@ -1,5 +1,6 @@
 const initialState = {
   productList: [],
+  succeed: false,
 };
 
 const productReducer = (state = initialState, action) => {
@@ -19,12 +20,28 @@ const productReducer = (state = initialState, action) => {
     };
   }
   if (action.type === "UPDATE") {
-    state.productList.map((item) => {
+    const productListUpdated = state.productList.map((item) => {
       if (item._id === action.payload._id) {
         item = action.payload;
       }
       return item;
     });
+    return {
+      productList: [...productListUpdated],
+      succeed: true,
+    };
+  }
+  if (action.type === "ADD_NEW") {
+    return {
+      productList: [...state.productList, action.payload],
+      succeed: true,
+    };
+    // state.productList.push(action.payload);
+  }
+  if (action.type === "CLEAR_SUCCEED") {
+    return {
+      succeed: false,
+    };
   }
 
   return state;

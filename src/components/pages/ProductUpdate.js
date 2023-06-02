@@ -13,9 +13,8 @@ const ProductUpdate = () => {
   const refLongDescription = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const productUpdate = useSelector(
-    (state) => state.productReducer
-  ).productList.filter((item) => item._id === id)[0];
+  const { productList, succeed } = useSelector((state) => state.productReducer);
+  const productUpdate = productList?.filter((item) => item._id === id)[0];
   // add data product to control
   useEffect(() => {
     refProductName.current.value = productUpdate.name;
@@ -30,8 +29,13 @@ const ProductUpdate = () => {
     productUpdate.short_desc = refShortDescription.current.value;
     productUpdate.long_desc = refLongDescription.current.value;
     dispatch(updateProductAPI(productUpdate));
-    navigate("/products");
   };
+  // waiting for save succeed, then navigation to /products
+  useEffect(() => {
+    if (!succeed) return;
+    dispatch({ type: "CLEAR_SUCCEED" });
+    navigate("/products");
+  }, [succeed]);
   return (
     <div className={classes["product-container"]}>
       <BannerShop text={{ left: "ADMIN", right: "UPDATE" }} />

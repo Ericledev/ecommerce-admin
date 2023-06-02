@@ -11,10 +11,12 @@ const Product = () => {
   const { productList } = useSelector((state) => state.productReducer);
   const dispatch = useDispatch();
   const [products, setProducts] = useState(null);
+  // componentDidMount
   useEffect(() => {
     dispatch(getAllProductAPI());
     dispatch({ type: "ACTIVE_PRODUCT_PAGE" });
   }, []);
+  // rerender when get all product from DB
   useEffect(() => {
     setProducts(productList);
   }, [productList]);
@@ -31,6 +33,7 @@ const Product = () => {
   // crud handler
   const crudHandler = (type, productId) => {
     if (type === "delete") {
+      if (!window.confirm(`Do you want to delete id: ${productId}?`)) return;
       dispatch(deleteProductAPI(productId));
     }
     if (type === "update") {
@@ -59,7 +62,7 @@ const Product = () => {
           <button className={classes["add-new-btn"]} onClick={addNewHandler}>
             Add New +
           </button>
-          {productList.length > 0 && (
+          {productList?.length > 0 && (
             <ProductTable products={products} crud={crudHandler} />
           )}
         </div>

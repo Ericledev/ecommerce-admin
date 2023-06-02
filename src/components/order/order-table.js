@@ -15,7 +15,7 @@ const OrderTable = (props) => {
   const tableData = listOrders.map((item, index) => {
     // total price
     const totalPrice = item.products.reduce((total, product) => {
-      return (total += product.quantity * product.product_id.price);
+      return (total += product.quantity * product.product_id?.price);
     }, 0);
     return (
       <tr key={index}>
