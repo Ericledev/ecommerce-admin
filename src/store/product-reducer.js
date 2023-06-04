@@ -1,6 +1,7 @@
 const initialState = {
   productList: [],
   succeed: false,
+  deleteNotSucceed: false,
 };
 
 const productReducer = (state = initialState, action) => {
@@ -8,6 +9,8 @@ const productReducer = (state = initialState, action) => {
   if (action.type === "GET_ALL_PRODUCT")
     return {
       productList: [...action.payload.data],
+      succeed: false,
+      deleteNotSucceed: false,
     };
 
   if (action.type === "DELETE") {
@@ -17,6 +20,8 @@ const productReducer = (state = initialState, action) => {
     );
     return {
       productList: [...temp],
+      succeed: false,
+      deleteNotSucceed: false,
     };
   }
   if (action.type === "UPDATE") {
@@ -29,18 +34,36 @@ const productReducer = (state = initialState, action) => {
     return {
       productList: [...productListUpdated],
       succeed: true,
+      deleteNotSucceed: false,
     };
   }
   if (action.type === "ADD_NEW") {
     return {
-      productList: [...state.productList, action.payload],
+      productList: [...state.productList],
       succeed: true,
+      deleteNotSucceed: false,
     };
-    // state.productList.push(action.payload);
   }
+  // clear add new succeed
   if (action.type === "CLEAR_SUCCEED") {
     return {
+      productList: state.productList,
       succeed: false,
+      deleteNotSucceed: false,
+    };
+  }
+  if (action.type === "DELETE_NOT_SUCCEED") {
+    return {
+      productList: state.productList,
+      succeed: false,
+      deleteNotSucceed: true,
+    };
+  }
+  if (action.type === "CLEAR_DELETE_SUCCEED") {
+    return {
+      productList: state.productList,
+      succeed: false,
+      deleteNotSucceed: false,
     };
   }
 

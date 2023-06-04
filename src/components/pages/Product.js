@@ -8,7 +8,9 @@ import { useNavigate } from "react-router-dom";
 
 const Product = () => {
   const navigate = useNavigate();
-  const { productList } = useSelector((state) => state.productReducer);
+  const { productList, deleteNotSucceed } = useSelector(
+    (state) => state.productReducer
+  );
   const dispatch = useDispatch();
   const [products, setProducts] = useState(null);
   // componentDidMount
@@ -20,7 +22,13 @@ const Product = () => {
   useEffect(() => {
     setProducts(productList);
   }, [productList]);
-
+  // handle status delete
+  useEffect(() => {
+    if (deleteNotSucceed) {
+      alert("Can not delete. This product is used by order collection");
+      dispatch({ type: "CLEAR_DELETE_SUCCEED" });
+    }
+  }, [deleteNotSucceed]);
   // search function
   const searchProductHandler = (e) => {
     // search product by name

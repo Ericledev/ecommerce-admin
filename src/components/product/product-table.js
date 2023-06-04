@@ -9,13 +9,14 @@ const ProductTable = (props) => {
   const deleteHandler = (productId) => {
     props.crud("delete", productId);
   };
+
   // create data row inside table
   const tableData =
     products &&
     products.map((item, index) => {
       const pathImage = item?.images[0].includes("/images/multiple_images")
-        ? process.env.REACT_APP_DOMAIN + item.images[0]
-        : item.images[0];
+        ? process.env.REACT_APP_DOMAIN + item?.images[0]
+        : item?.images[0];
       return (
         <tr key={index}>
           <td>{item._id}</td>

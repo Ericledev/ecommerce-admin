@@ -31,6 +31,9 @@ export const deleteProductAPI = (productId) => {
     if (res.status === 200) {
       dispatch({ type: "DELETE", payload: productId });
     }
+    if (res.status === 402) {
+      dispatch({ type: "DELETE_NOT_SUCCEED", payload: productId });
+    }
   };
 };
 export const updateProductAPI = (product) => {
@@ -81,7 +84,7 @@ export const addNewProductAPI = (payload) => {
     // 200 = ok
     if (res.status === 200) {
       const product = await res.json();
-      dispatch({ type: "ADD_NEW", payload: product });
+      dispatch({ type: "ADD_NEW" });
     }
   };
 };

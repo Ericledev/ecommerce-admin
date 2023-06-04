@@ -52,8 +52,8 @@ const ProductAddNew = () => {
       refProductQuantity.current.focus();
       return false;
     }
-    if (images.length === 0 || images.length > 5) {
-      alert("Please choose the images of product from 1 to 5 images");
+    if (images.length === 0 || images.length > 4) {
+      alert("Please choose the images of product from 1 to 4 images");
       return false;
     }
     return true;
@@ -177,7 +177,7 @@ const ProductAddNew = () => {
           />
         </div>
         <div className={classes["upload-image"]}>
-          <p htmlFor="upload-image">Upload image (5 images)</p>
+          <p htmlFor="upload-image">Upload image (4 images)</p>
           <input
             id="upload-image"
             type="file"
