@@ -17,6 +17,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const signUpHandler = () => {
+    // alert("You do not allow to access")
     navigate("/register");
   };
   useEffect(() => {
@@ -109,9 +110,9 @@ const LoginPage = () => {
           <button className={!validForm ? classes["invalid-form"] : ""}>
             SIGN IN
           </button>
-          <p>
+          {/* <p>
             Create an account? <span onClick={signUpHandler}>Sign up</span>
-          </p>
+          </p> */}
         </form>
       </LayoutLoginForm>
     </div>
