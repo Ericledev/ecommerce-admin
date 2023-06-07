@@ -16,10 +16,10 @@ const LoginPage = () => {
   const validForm = validEmail && validPass;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const signUpHandler = () => {
-    // alert("You do not allow to access")
-    navigate("/register");
-  };
+  // const signUpHandler = () => {
+  //   // alert("You do not allow to access")
+  //   navigate("/register");
+  // };
   useEffect(() => {
     if (!isLoggedIn) {
       dispatch({ type: "ACTIVE_LOGIN_PAGE" });
@@ -38,9 +38,7 @@ const LoginPage = () => {
 
   const signInHandler = (e) => {
     e.preventDefault();
-    console.log("CHECK VALID FORM: ", validForm);
     if (validForm) {
-      console.log("valid form to dispatch:");
       dispatch(
         loginAPI({
           email: emailRef.current.value,

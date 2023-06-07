@@ -9,7 +9,6 @@ export const loginAPI = (user) => {
       body: JSON.stringify(user),
     });
 
-    console.log("CHECK RES: ", res);
     // 420 = user is not existed
     if (res.status === 420) {
       dispatch({ type: "NOT_EXISTED_USER" });
